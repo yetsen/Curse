@@ -3,11 +3,14 @@ package app.android.basic.basicandroidappdesign;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.Menu;
@@ -18,7 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     ActionBar actionBar;
     private DrawerLayout drawerLayout;
@@ -28,8 +31,9 @@ public class MainActivity extends Activity {
     ActionBarDrawerToggle drawerToggle;
     private static long back_pressed;
     ActionBar.Tab tab1,tab2;
-    Fragment tabFragment1 = new TabFragment1();
-    Fragment tabFragment2 = new TabFragment2();
+    ViewPager viewPager;
+    TabsPagerAdapter tabsPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +56,39 @@ public class MainActivity extends Activity {
     }
 
     private void initializeTabs() {
+        tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // When swiping between pages, select the
+                        // corresponding tab.
+                        getActionBar().setSelectedNavigationItem(position);
+                    }
+                });
+        viewPager.setAdapter(tabsPagerAdapter);
+        ActionBar.TabListener tabListener =  new ActionBar.TabListener() {
+            @Override
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+        };
         tab1 = actionBar.newTab().setText("tab1");
-        tab1.setTabListener(new TabListener(tabFragment1));
+        tab1.setTabListener(tabListener);
         actionBar.addTab(tab1);
         tab2 = actionBar.newTab().setText("tab2");
-        tab2.setTabListener(new TabListener(tabFragment2));
+        tab2.setTabListener(tabListener);
         actionBar.addTab(tab2);
     }
 
