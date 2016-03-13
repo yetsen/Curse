@@ -1,9 +1,6 @@
-package app.android.basic.basicandroidappdesign;
+package tr.com.orties.curse.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import tr.com.orties.curse.R;
+import tr.com.orties.curse.actionbar.TabListener;
+import tr.com.orties.curse.adapters.TabsPagerAdapter;
 
 public class MainActivity extends FragmentActivity {
 
@@ -68,22 +69,7 @@ public class MainActivity extends FragmentActivity {
                     }
                 });
         viewPager.setAdapter(tabsPagerAdapter);
-        ActionBar.TabListener tabListener =  new ActionBar.TabListener() {
-            @Override
-            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-            }
-
-            @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-            }
-        };
+        ActionBar.TabListener tabListener = new TabListener(viewPager);
         tab1 = actionBar.newTab().setText("tab1");
         tab1.setTabListener(tabListener);
         actionBar.addTab(tab1);

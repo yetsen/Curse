@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Basic Android App Design</string>
+    <string name="app_name">Curse</string>
 
     <string-array name="nav_drawer_items">
         <item>Ali</item>
@@ -13,7 +13,7 @@
     <string name="close_warning">Press back again to leave</string>
     <string name="drawer_open">Drawer is opened</string>
     <string name="drawer_close">Drawer is closed</string>
-    <string name="main_action_bar_item_1">item1</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gps_action_bar_item">GPS</string>
+    <string name="type_message">Type Message</string>
 
 </resources>

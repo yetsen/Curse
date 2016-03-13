@@ -1,8 +1,11 @@
-package app.android.basic.basicandroidappdesign;
+package tr.com.orties.curse.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import tr.com.orties.curse.fragments.TabFragment1;
+import tr.com.orties.curse.fragments.TabFragment2;
 
 /**
  * Created by Yunus on 3.5.2015.
