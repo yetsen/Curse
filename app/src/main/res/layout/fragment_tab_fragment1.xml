@@ -1,50 +1,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp">
-    <ListView
-        android:id="@+id/messagesListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/sendMsgLayout"
-        android:overScrollMode="always"
-        android:stackFromBottom="true"
-        android:layout_alignParentTop="true" >
-    </ListView>
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/sendMsgLayout"
+    <EditText
+        android:id="@+id/etUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp">
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="50sp"
+        android:hint="@string/type_username"
+        android:maxLines="1"
+        android:layout_centerHorizontal="true"
+        android:inputType="textPersonName">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/holo_green_dark" />
+        <requestFocus />
+    </EditText>
 
-        <EditText
-            android:id="@+id/messageText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@+id/imageSend"
-            android:hint="@string/type_message"
-            android:maxLines="3" >
-
-            <requestFocus />
-        </EditText>
-
-        <ImageView
-            android:id="@+id/imageSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/messageText"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_send" />
-    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/submitUsernameButton"
+        android:layout_below="@+id/etUserName"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

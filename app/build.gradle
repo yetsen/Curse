@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
-        applicationId "app.android.basic.basicandroidappdesign"
+        applicationId "tr.com.orties.curse"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
@@ -22,4 +22,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }
