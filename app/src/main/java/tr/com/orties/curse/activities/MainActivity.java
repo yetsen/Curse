@@ -19,10 +19,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import tr.com.orties.curse.R;
+import tr.com.orties.curse.actionbar.CustomViewPager;
 import tr.com.orties.curse.actionbar.TabListener;
 import tr.com.orties.curse.adapters.TabsPagerAdapter;
+import tr.com.orties.curse.services.LocationService;
 
 public class MainActivity extends FragmentActivity {
+
+    public int totalTabCount = 0;
+    public static final String PREFS_NAME = "CurseFile";
 
     ActionBar actionBar;
     private DrawerLayout drawerLayout;
@@ -31,9 +36,10 @@ public class MainActivity extends FragmentActivity {
     ArrayAdapter<String> arrayAdapter;
     ActionBarDrawerToggle drawerToggle;
     private static long back_pressed;
-    ActionBar.Tab tab1,tab2;
-    ViewPager viewPager;
+    ActionBar.Tab tab;
+    CustomViewPager viewPager;
     TabsPagerAdapter tabsPagerAdapter;
+    LocationService locationService;
 
 
     @Override
@@ -58,24 +64,35 @@ public class MainActivity extends FragmentActivity {
 
     private void initializeTabs() {
         tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (CustomViewPager) findViewById(R.id.pager);
         viewPager.setOnPageChangeListener(
                 new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageSelected(int position) {
                         // When swiping between pages, select the
                         // corresponding tab.
-                        getActionBar().setSelectedNavigationItem(position);
+                        viewPager.setPagingEnabled(true);
+                        if (totalTabCount >= position) {
+                            viewPager.setPagingEnabled(true);
+                            getActionBar().setSelectedNavigationItem(position);
+                        }else {
+                            viewPager.setPagingEnabled(false);
+                        }
                     }
                 });
         viewPager.setAdapter(tabsPagerAdapter);
-        ActionBar.TabListener tabListener = new TabListener(viewPager);
-        tab1 = actionBar.newTab().setText("tab1");
-        tab1.setTabListener(tabListener);
-        actionBar.addTab(tab1);
-        tab2 = actionBar.newTab().setText("tab2");
-        tab2.setTabListener(tabListener);
-        actionBar.addTab(tab2);
+        addTab("User Info");
+    }
+
+    public void addTab(String tabName) {
+        if (totalTabCount < 2) {
+            ActionBar.TabListener tabListener = new TabListener(viewPager);
+            tab = actionBar.newTab().setText(tabName);
+            tab.setTabListener(tabListener);
+            actionBar.addTab(tab);
+            totalTabCount++;
+        }
+        viewPager.setCurrentItem(totalTabCount-1);
     }
 
     @Override
@@ -152,6 +169,18 @@ public class MainActivity extends FragmentActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         if(drawerToggle.onOptionsItemSelected(item))
             return true;
+
+        switch (item.getItemId()) {
+            case R.id.gps:
+                locationService = new LocationService(this);
+                if(locationService.isGPSOn()) {
+                    locationService.startGettingLocation();
+                }else {
+                    Toast.makeText(getBaseContext(), "GPS yok lan!!", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
