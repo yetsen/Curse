@@ -25,11 +25,14 @@ public class LocatifyRestServiceUsage {
 
     List<Message> messageList = new ArrayList<Message>();
 
-    public List<Message> getMessages(final Context context, String latitude, String longitude){
+    public List<Message> getMessages(final Context context, String latitude, String longitude, int lastId){
         JSONObject jsonParams = new JSONObject();
         try {
-            jsonParams.put("latitude", latitude);
-            jsonParams.put("longitude", longitude);
+            JSONObject point = new JSONObject();
+            point.put("latitude",latitude);
+            point.put("longitude", longitude);
+            jsonParams.put("point", point);
+            jsonParams.put("lastId", lastId);
             LocatifyRestService.messageService(context, "curse/getMessages", new StringEntity(jsonParams.toString()), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -44,6 +47,7 @@ public class LocatifyRestServiceUsage {
                             location.setLatitude(object.getString("latitude"));
                             location.setLongitude(object.getString("longitude"));
                             message.setLocation(location);
+                            message.setId(object.getInt("id"));
                             messageList.add(message);
                         } catch (JSONException e) {
                             e.printStackTrace();
