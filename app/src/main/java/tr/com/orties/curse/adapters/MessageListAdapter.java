@@ -49,7 +49,9 @@ public class MessageListAdapter extends BaseAdapter {
         if (view == null)
             view = inflater.inflate(R.layout.message, null);
         TextView message = (TextView) view.findViewById(R.id.message_text);
+        TextView userText = (TextView) view.findViewById(R.id.tvUserName);
         message.setText(messageList.get(i).getMessage());
+        userText.setText(messageList.get(i).getUsername());
         return view;
     }
 }

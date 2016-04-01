@@ -14,11 +14,23 @@ public class LocationService implements LocationListener{
 
     Context context;
     LocationManager manager;
-    tr.com.orties.curse.model.Location location;
+    tr.com.orties.curse.model.Location loc;
 
     public LocationService(Context context) {
         this.context = context;
         this.manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        loc = new tr.com.orties.curse.model.Location();
+        loc.setLongitude("-1");
+        loc.setLatitude("-1");
+    }
+
+
+    public tr.com.orties.curse.model.Location getLoc() {
+        return loc;
+    }
+
+    public void setLoc(tr.com.orties.curse.model.Location loc) {
+        this.loc = loc;
     }
 
     public boolean isGPSOn() {
@@ -34,6 +46,9 @@ public class LocationService implements LocationListener{
     public void onLocationChanged(Location location) {
         Log.d("latitude : ", location.getLatitude() + "");
         Log.d("longitude : ", location.getLongitude() + "");
+        loc.setLatitude(location.getLatitude() + "");
+        loc.setLongitude(location.getLongitude() + "");
+        //updateMessageList();
     }
 
     @Override

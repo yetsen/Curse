@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -19,8 +20,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import tr.com.orties.curse.R;
-import tr.com.orties.curse.actionbar.CustomViewPager;
-import tr.com.orties.curse.actionbar.TabListener;
+import tr.com.orties.curse.fragments.TabFragment2;
+import tr.com.orties.curse.services.LocatifyRestServiceUsage;
+import tr.com.orties.curse.services.MessageService;
+import tr.com.orties.curse.ui.CustomViewPager;
+import tr.com.orties.curse.ui.TabListener;
 import tr.com.orties.curse.adapters.TabsPagerAdapter;
 import tr.com.orties.curse.services.LocationService;
 
@@ -40,7 +44,6 @@ public class MainActivity extends FragmentActivity {
     CustomViewPager viewPager;
     TabsPagerAdapter tabsPagerAdapter;
     LocationService locationService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class MainActivity extends FragmentActivity {
                         if (totalTabCount >= position) {
                             viewPager.setPagingEnabled(true);
                             getActionBar().setSelectedNavigationItem(position);
-                        }else {
+                        } else {
                             viewPager.setPagingEnabled(false);
                         }
                     }
@@ -92,7 +95,7 @@ public class MainActivity extends FragmentActivity {
             actionBar.addTab(tab);
             totalTabCount++;
         }
-        viewPager.setCurrentItem(totalTabCount-1);
+        viewPager.setCurrentItem(totalTabCount - 1);
     }
 
     @Override
@@ -153,6 +156,11 @@ public class MainActivity extends FragmentActivity {
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
+    }
+
+    public void updateMessageList() {
+        TabFragment2 messageFragment = (TabFragment2)tabsPagerAdapter.getRegisteredFragment(1);
+        messageFragment.updateMessageList();
     }
 
     @Override
